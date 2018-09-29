@@ -41,5 +41,5 @@ public class CIS106M {
           System.out.println("Tax is:"+(2202500+0.35*(tax-2000000)));
       }
     }
-    
+    scan.close();
 }
