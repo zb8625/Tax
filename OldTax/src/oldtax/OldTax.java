@@ -30,7 +30,7 @@ public class OldTax {
                     d=50000;
                     break;
                 case "YES":
-                    d=50000;
+                    d=10000;
                     break;
                 default:
                     d=0;
