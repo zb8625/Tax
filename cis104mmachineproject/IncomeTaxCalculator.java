@@ -1,57 +1,88 @@
+
 package cis104mmachineproject;
 
 // Class containing all methods for calculating the components of the
 // Income Tax Calculator 
 
 public class IncomeTaxCalculator {
+    String userName;           // Name of user
     double monthlyGrossIncome; // User-defined monthly gross income
     int numDependents;         // number of dependents of user (up to 4 only)
     boolean isUserMarried;     // Civil Status of user
     String employmentStatus;   // Employment Status of user (Employed or Self-Employed)
-    String userName;           // Name of user
     
+    // Constructor Method for Class variables
     public IncomeTaxCalculator(
+            String nameGiven,
             double userIncome,
             int userDependents,
             boolean userCivil,
-            String userStatus,
-            String nameGiven
+            String userStatus
     )
     {
+        userName = nameGiven;
         monthlyGrossIncome = userIncome;
         numDependents = userDependents;
         isUserMarried = userCivil;
         employmentStatus = userStatus;
-        userName = nameGiven;
     }
     
+    // Method that returns the name of the user (userName)
     public String getName(){
         return userName;
     }
     
+    // Method that returns the Annual Taxable Income of the user based on the
+    // pre-TRAIN tax rate
     public double calculateAnnualIncomeOld(){
         if (monthlyGrossIncome <= 82000){
             return monthlyGrossIncome * 12;
         }
         else {
-            return monthlyGrossIncome * 12 + monthlyGrossIncome - 82000;
+            return (monthlyGrossIncome * 12) + monthlyGrossIncome - 82000; // Annual bonuses in excess of P82,000 is taxable
         }
     }
     
+    // Method that returns the Annual Taxable Income of the user based on the
+    // TRAIN tax rate
     public double calculateAnnualIncomeNew(){
         if (monthlyGrossIncome <= 90000){
             return monthlyGrossIncome * 12;
         }
         else {
-            return monthlyGrossIncome * 12 + monthlyGrossIncome - 90000;
+            return (monthlyGrossIncome * 12) + monthlyGrossIncome - 90000; // Annual bonuses in excess of P90,000 is taxable
         }
     }
     
+    // Method that calculates Tax Exemption for users with dependents
+    // P25,000 per dependent, maximum of 4 dependents only
+    public double getDependentExemption(){
+        double result = 0;
+        if (numDependents>=0&&numDependents<=4){
+        return result = numDependents * 25000;
+        } else if (numDependents>4){
+            return result = 100000;
+        }
+      return result;
+    }
     
+    // Method that calculates Tax Exemption based on user's civil status
+    // For Married - less P50,000 from Taxable Income
+    public double getMarriedExemption(){
+        if (isUserMarried){
+            return 50000;
+        } else {
+            return 0;
+        }
+    }
+    
+    // Method that returns PAGIBIG Monthly Deduction
+    // Default contribution is P100.00 across the board
     public double getPAGIBIGDeduction(){
         return 100.00;
     }
     
+    // Method that returns SSS Monthly Deduction
     public double getSSSDeduction(){
         double result = 0;
         if (monthlyGrossIncome>=1000.00&&monthlyGrossIncome<=1249.99){
@@ -305,6 +336,289 @@ public class IncomeTaxCalculator {
         
         return result;        
     }
+    
+    //Method that returns PhilHealth Monthly Deduction
+    public double getPhilHealthDeduction(){
+        double result = 0;
+        if (monthlyGrossIncome<=8999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 100.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 200.00;
+            }
+        }
+        if (monthlyGrossIncome>=9000.00&&monthlyGrossIncome<=9999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 112.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 225.00;
+            }
+        }
+        if (monthlyGrossIncome>=10000.00&&monthlyGrossIncome<=10999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 125.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 250.00;
+            }
+        }
+        if (monthlyGrossIncome>=11000.00&&monthlyGrossIncome<=11999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 137.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 275.00;
+            }
+        }
+        if (monthlyGrossIncome>=12000.00&&monthlyGrossIncome<=12999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 150.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 300.00;
+            }
+        }
+        if (monthlyGrossIncome>=13000.00&&monthlyGrossIncome<=13999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 162.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 325.00;
+            }
+        }
+        if (monthlyGrossIncome>=14000.00&&monthlyGrossIncome<=14999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 175.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 350.00;
+            }
+        }
+        if (monthlyGrossIncome>=15000.00&&monthlyGrossIncome<=15999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 187.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 375.00;
+            }
+        }
+        if (monthlyGrossIncome>=16000.00&&monthlyGrossIncome<=16999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 200.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 400.00;
+            }
+        }
+        if (monthlyGrossIncome>=17000.00&&monthlyGrossIncome<=17999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 212.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 425.00;
+            }
+        }
+        if (monthlyGrossIncome>=18000.00&&monthlyGrossIncome<=18999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 225.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 450.00;
+            }
+        }
+        if (monthlyGrossIncome>=19000.00&&monthlyGrossIncome<=19999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 237.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 475.00;
+            }
+        }
+        if (monthlyGrossIncome>=20000.00&&monthlyGrossIncome<=20999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 250.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 500.00;
+            }
+        }
+        if (monthlyGrossIncome>=21000.00&&monthlyGrossIncome<=21999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 262.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 525.00;
+            }
+        }
+        if (monthlyGrossIncome>=22000.00&&monthlyGrossIncome<=22999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 275.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 550.00;
+            }
+        }
+        if (monthlyGrossIncome>=23000.00&&monthlyGrossIncome<=23999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 287.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 575.00;
+            }
+        }
+        if (monthlyGrossIncome>=24000.00&&monthlyGrossIncome<=24999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 300.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 600.00;
+            }
+        }
+        if (monthlyGrossIncome>=25000.00&&monthlyGrossIncome<=25999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 312.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 625.00;
+            }
+        }
+        if (monthlyGrossIncome>=26000.00&&monthlyGrossIncome<=26999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 325.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 650.00;
+            }
+        }
+        if (monthlyGrossIncome>=27000.00&&monthlyGrossIncome<=27999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 337.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 675.00;
+            }
+        }
+        if (monthlyGrossIncome>=28000.00&&monthlyGrossIncome<=28999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 350.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 700.00;
+            }
+        }
+        if (monthlyGrossIncome>=29000.00&&monthlyGrossIncome<=29999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 362.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 725.00;
+            }
+        }
+        if (monthlyGrossIncome>=30000.00&&monthlyGrossIncome<=30999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 375.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 750.00;
+            }
+        }
+        if (monthlyGrossIncome>=31000.00&&monthlyGrossIncome<=31999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 387.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 775.00;
+            }
+        }
+        if (monthlyGrossIncome>=32000.00&&monthlyGrossIncome<=32999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 400.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 800.00;
+            }
+        }
+        if (monthlyGrossIncome>=33000.00&&monthlyGrossIncome<=33999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 412.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 825.00;
+            }
+        }
+        if (monthlyGrossIncome>=34000.00&&monthlyGrossIncome<=34999.99){
+            if ("e".equals(employmentStatus)) {
+                result = 425.00;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 850.00;
+            }
+        }
+        if (monthlyGrossIncome>=35000.00){
+            if ("e".equals(employmentStatus)) {
+                result = 437.50;
+            }
+            else if ("se".equals(employmentStatus)) {
+                result = 875.00;
+            }
+        }
+        return result;
+    }
+    
+    // Method to get the ANNUAL TAX DUE under TRAIN Law 
+    // based on Annual Taxable Income (Monthly Taxable Income * 12)
+    public double getAnnualIncomeTaxNew( double annualTaxableIncome ){
+        double result = 0;
+        if (annualTaxableIncome<=250000.00){    
+            result = 0;
+        }
+        else if (annualTaxableIncome>250000.00&&annualTaxableIncome<=400000.00){
+            result = (annualTaxableIncome - 250000.00) * 0.20;
+        }
+        else if (annualTaxableIncome>400000.00&&annualTaxableIncome<=800000.00){
+            result = 30000.00 + ((annualTaxableIncome - 400000.00) * 0.25);
+        }
+        else if (annualTaxableIncome>800000.00&&annualTaxableIncome<=2000000.00){
+            result = 130000.00 + ((annualTaxableIncome - 800000.00) * 0.30);
+        }
+        else if (annualTaxableIncome>2000000.00&&annualTaxableIncome<=8000000.00){
+            result = 490000.00 + ((annualTaxableIncome - 2000000.00) * 0.32);
+        }
+        else if (annualTaxableIncome>8000000.00){
+            result = 2410000.00 + ((annualTaxableIncome - 8000000.00) * 0.35);
+        }
+        return result;
+    }
+    
+        // Method to get Annual Taxable Income before implementation of TRAIN Law
+        public double getAnnualIncomeTaxOld( double annualTaxableIncome ){
+        double result = 0;
+        if (annualTaxableIncome<=10000.00){    
+            result = annualTaxableIncome * 0.05;
+        }
+        else if (annualTaxableIncome>10000.00&&annualTaxableIncome<=30000.00){
+            result = 500 + ((annualTaxableIncome - 10000.00) * 0.10);
+        }
+        else if (annualTaxableIncome>30000.00&&annualTaxableIncome<=70000.00){
+            result = 2500.00 + ((annualTaxableIncome - 30000.00) * 0.15);
+        }
+        else if (annualTaxableIncome>70000.00&&annualTaxableIncome<=140000.00){
+            result = 8500.00 + ((annualTaxableIncome - 70000.00) * 0.20);
+        }
+        else if (annualTaxableIncome>140000.00&&annualTaxableIncome<=250000.00){
+            result = 22500.00 + ((annualTaxableIncome - 140000.00) * 0.25);
+        }
+        else if (annualTaxableIncome>250000.00&&annualTaxableIncome<=500000.00){
+            result = 50000.00 + ((annualTaxableIncome - 250000.00) * 0.30);
+        }
+        else if (annualTaxableIncome>500000.00){
+            result = 125000.00 + ((annualTaxableIncome - 500000.00) * 0.32);
+        }
+        return result;
+    }
+    
     
 }
 
