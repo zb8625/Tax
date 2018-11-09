@@ -1,0 +1,361 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+import java.util.Scanner;
+/**
+ *
+ * @author 86258
+ */
+public class test {
+    public static void main(String[] args) {
+        try (Scanner scan = new Scanner(System.in)) {
+            System.out.println("Are you married? ");
+            
+            String married = scan.nextLine(); //If user are married 
+            
+            double d; //discount from married
+            //catch answer from user
+            switch (married) {
+                case "yes":
+                    d=50000;
+                    break;
+                case "Yes":
+                    d=50000;
+                    break;
+                case "YES":
+                    d=50000;
+                    break;
+                default:
+                    d=0;
+                    break;
+            }
+            System.out.println("Are you employed(e) or self employed(se)?");
+            String employed = scan.nextLine();
+            
+                              
+            System.out.println("How many chid do you have?");
+            
+            double c;//discount form child
+            int nd = scan.nextInt();//number of dependent, from user input
+            
+            if(0<=nd && nd<=4){
+                c=25000*nd;
+            }else if(nd>4){
+                c=25000*4;
+            }else{
+                c=0;
+            }
+            
+            
+            System.out.print("Enter your monthly salry£º ");
+            double salary = scan.nextDouble();
+            //set "s" as annual salary; "salary" as monthly salary
+            
+            System.out.println("Your New monthly tax is: " +newTax(salary));
+            System.out.println("Your Old monthly tax is: " +oldTax(salary,d,c));
+            System.out.println("Your SSS is "+SSS(salary,employed));
+            System.out.println("Your Philhealth mothly deduction is: "+Philhealth(salary,employed));
+        }
+    }
+public static double oldTax (double salary,double d ,double c){
+        /* "s" is anual salary but after deducted from married and dependent**/
+         double s;
+            if (salary<=82000){
+                s=salary*12-d-c;
+            }else{
+                s=salary*12+(salary-82000)-d-c;
+            }
+            if (s<=10000){
+                return s*0.05/12;
+            }else if(s>10000 && s <=30000){
+                return ((500+(s-10000)*0.10)/12);
+            }else if (s> 30000 && s <=70000){
+                return ((2500+(s-30000)*0.15)/12);
+            }else if (s> 70000 && s <= 140000){
+                return ((8500+(s-70000)*0.20)/12);
+            }else if (s>140000 && s <= 250000){
+                return ((22500+(s-140000)*0.25)/12);
+            }else if(s>250000 && s <= 500000){
+                return ((50000+(s-250000)*0.30)/12);
+            }else{
+                return ((125000+(s-500000)*0.32)/12);
+            }
+    }
+    public static double newTax(double salary){
+    /* set sn as annual salary**/
+            double sn;
+            if (salary <= 90000){
+                sn=salary*12;
+            }  else{
+                sn=salary*12+(salary-90000);
+            }
+            
+            if( sn <= 250000 ){
+                return (sn * 0.0);
+            }else if( sn > 250000 && sn <= 400000 ){
+                return ((0.15*(sn-250000)))/12;
+            }else if( sn>400000 && sn <=800000 ){
+                return ((22500+0.2*(sn-400000)))/12;
+            }else if( sn>800000 && sn<=2000000 ){
+                return ((102500+0.25*(sn-800000)))/12;
+            }else if( sn>2000000 && sn<=8000000 ){
+               return ((402500+0.3*(sn-2000000)))/12;
+            }else{
+                return ((2202500+0.35*(sn-2000000)))/12;
+            } 
+    }
+    public static double SSS(double salary, String employed){
+        if ("e".equals(employed)){
+            if (salary>=1000.00 && salary < 1250.00){
+                return 36.30;
+            }else if(salary>=1250.00 && salary < 1750.00){
+                return 54.50;
+            }else if (salary>=1750.00 && salary < 2250.00){
+                return 72.70;
+            }else if (salary>=2250.00 && salary < 2750.00){
+                return 90.80;
+            }else if (salary>=2750.00 && salary < 3250.00){
+                return 109.00;
+            }else if (salary>=3250.00 && salary < 3750.00){
+                return 127.20;
+            }else if (salary>=3750.00 && salary < 4250.00){
+                return 145.30;
+            }else if (salary>=4250.00 && salary < 4750.00){
+                return 163.50;
+            }else if (salary>=4750.00 && salary < 5250.00){
+                return 181.70;
+            }else if (salary>=5250.00 && salary < 5750.00){
+                return 199.80;
+            }else if (salary>=5750.00 && salary < 6250.00){
+                return 218.00;
+            }else if (salary>=6250.00 && salary < 6750.00){
+                return 236.20;
+            }else if (salary>=6750.00 && salary < 7250.00){
+                return 254.30;
+            }else if (salary>=7250.00 && salary < 7750.00){
+                return 272.50;
+            }else if (salary>=7750.00 && salary < 8250.00){
+                return 290.70;
+            }else if (salary>=8250.00 && salary < 8750.00){
+                return 308.80;
+            }else if (salary>=8750.00 && salary < 9250.00){
+                return 327.00;
+            }else if (salary>=9250.00 && salary < 9750.00){
+                return 345.20;
+            }else if (salary>=9750.00 && salary < 10250.00){
+                return 363.30;
+            }else if (salary>=10250.00 && salary < 10750.00){
+                return 381.50;
+            }else if (salary>=10750.00 && salary < 11250.00){
+                return 399.70;
+            }else if (salary>=11250.00 && salary < 11750.00){
+                return 417.80;
+            }else if (salary>=11750.00 && salary < 12250.00){
+                return 436.00;
+            }else if (salary>=12250.00 && salary < 12750.00){
+                return 454.20;
+            }else if (salary>=12750.00 && salary < 13250.00){
+                return 472.30;
+            }else if (salary>=13250.00 && salary < 13750.00){
+                return 490.50;
+            }else if (salary>=13750.00 && salary < 14250.00){
+                return 508.70;
+            }else if (salary>=14250.00 && salary < 14750.00){
+                return 526.80;
+            }else if (salary>=14750.00 && salary < 15250.00){
+                return 545.00;
+            }else if (salary>=15250.00 && salary < 15750.00){
+                return 563.20;
+            }else { 
+                return 581.30;
+            }
+        }else {
+            if (salary>=1000.00 && salary < 1250.00){
+                return 110.00;
+            }else if(salary>=1250.00 && salary < 1750.00){
+                return 165.00;
+            }else if (salary>=1750.00 && salary < 2250.00){
+                return 220.00;
+            }else if (salary>=2250.00 && salary < 2750.00){
+                return 275.00;
+            }else if (salary>=2750.00 && salary < 3250.00){
+                return 330.00;
+            }else if (salary>=3250.00 && salary < 3750.00){
+                return 385.00;
+            }else if (salary>=3750.00 && salary < 4250.00){
+                return 440.00;
+            }else if (salary>=4250.00 && salary < 4750.00){
+                return 495.00;
+            }else if (salary>=4750.00 && salary < 5250.00){
+                return 550.00;
+            }else if (salary>=5250.00 && salary < 5750.00){
+                return 605.00;
+            }else if (salary>=5750.00 && salary < 6250.00){
+                return 660.00;
+            }else if (salary>=6250.00 && salary < 6750.00){
+                return 715.00;
+            }else if (salary>=6750.00 && salary < 7250.00){
+                return 770.00;
+            }else if (salary>=7250.00 && salary < 7750.00){
+                return 825.00;
+            }else if (salary>=7750.00 && salary < 8250.00){
+                return 880.00;
+            }else if (salary>=8250.00 && salary < 8750.00){
+                return 935.00;
+            }else if (salary>=8750.00 && salary < 9250.00){
+                return 990.00;
+            }else if (salary>=9250.00 && salary < 9750.00){
+                return 1045.00;
+            }else if (salary>=9750.00 && salary < 10250.00){
+                return 1100.00;
+            }else if (salary>=10250.00 && salary < 10750.00){
+                return 1155.00;
+            }else if (salary>=10750.00 && salary < 11250.00){
+                return 1210.00;
+            }else if (salary>=11250.00 && salary < 11750.00){
+                return 1265.00;
+            }else if (salary>=11750.00 && salary < 12250.00){
+                return 1320.00;
+            }else if (salary>=12250.00 && salary < 12750.00){
+                return 1375.00;
+            }else if (salary>=12750.00 && salary < 13250.00){
+                return 1430.00;
+            }else if (salary>=13250.00 && salary < 13750.00){
+                return 1485.00;
+            }else if (salary>=13750.00 && salary < 14250.00){
+                return 1540.00;
+            }else if (salary>=14250.00 && salary < 14750.00){
+                return 1595.00;
+            }else if (salary>=14750.00 && salary < 15250.00){
+                return 1650.00;
+            }else if (salary>=15250.00 && salary < 15750.00){
+                return 1705.00;
+            }else { 
+                return 1760.00;
+            }
+        }
+    }
+    public static double Philhealth(double salary, String employed){
+         if ("e".equals(employed)){
+             if (salary < 9000.00){
+                 return 100.00;
+             }else if (salary >=9000.00 && salary < 10000.00 ){
+                 return 112.50;
+             }else if (salary >=10000.00 && salary < 11000.00 ){
+                 return 125.00;
+             }else if (salary >=11000.00 && salary < 12000.00 ){
+                 return 137.50;
+             }else if (salary >=12000.00 && salary < 13000.00 ){
+                 return 150.00;
+             }else if (salary >=13000.00 && salary < 14000.00 ){
+                 return 162.50;
+             }else if (salary >=14000.00 && salary < 15000.00 ){
+                 return 175.00;
+             }else if (salary >=15000.00 && salary < 16000.00 ){
+                 return 187.50;
+             }else if (salary >=16000.00 && salary < 17000.00 ){
+                 return 200.00;
+             }else if (salary >=17000.00 && salary < 18000.00 ){
+                 return 212.50;
+             }else if (salary >=18000.00 && salary < 19000.00 ){
+                 return 225.00;
+             }else if (salary >=19000.00 && salary < 20000.00 ){
+                 return 237.50;
+             }else if (salary >=20000.00 && salary < 21000.00 ){
+                 return 250.00;
+             }else if (salary >=21000.00 && salary < 22000.00 ){
+                 return 262.50;
+             }else if (salary >=22000.00 && salary < 23000.00 ){
+                 return 275.00;
+             }else if (salary >=23000.00 && salary < 24000.00 ){
+                 return 287.50;
+             }else if (salary >=24000.00 && salary < 25000.00 ){
+                 return 300.00;
+             }else if (salary >=25000.00 && salary < 26000.00 ){
+                 return 312.50;
+              }else if (salary >=26000.00 && salary < 27000.00 ){
+                 return 325.00;
+            }else if (salary >=27000.00 && salary < 28000.00 ){
+                 return 337.50;
+            }else if (salary >=28000.00 && salary < 29000.00 ){
+                 return 350.00;
+            }else if (salary >=29000.00 && salary < 30000.00 ){
+                 return 362.50;
+            }else if (salary >=30000.00 && salary < 31000.00 ){
+                 return 375.00;            
+            }else if (salary >=31000.00 && salary < 32000.00 ){
+                 return 387.50;            
+            }else if (salary >=32000.00 && salary < 33000.00 ){
+                 return 400.00;            
+            }else if (salary >=33000.00 && salary < 34000.00 ){
+                 return 412.50;            
+            }else if (salary >=34000.00 && salary < 35000.00 ){
+                 return 425.00;            
+            }else{
+                 return 375.00;            
+            }      
+         }else{
+             if (salary < 9000.00){
+                 return 200.00;
+             }else if (salary >=9000.00 && salary < 10000.00 ){
+                 return 225.00;
+             }else if (salary >=10000.00 && salary < 11000.00 ){
+                 return 250.00;
+             }else if (salary >=11000.00 && salary < 12000.00 ){
+                 return 275.00;
+             }else if (salary >=12000.00 && salary < 13000.00 ){
+                 return 300.00;
+             }else if (salary >=13000.00 && salary < 14000.00 ){
+                 return 325.00;
+             }else if (salary >=14000.00 && salary < 15000.00 ){
+                 return 350.00;
+             }else if (salary >=15000.00 && salary < 16000.00 ){
+                 return 375.00;
+             }else if (salary >=16000.00 && salary < 17000.00 ){
+                 return 400.00;
+             }else if (salary >=17000.00 && salary < 18000.00 ){
+                 return 425.00;
+             }else if (salary >=18000.00 && salary < 19000.00 ){
+                 return 450.00;
+             }else if (salary >=19000.00 && salary < 20000.00 ){
+                 return 475.00;
+             }else if (salary >=20000.00 && salary < 21000.00 ){
+                 return 500.00;
+             }else if (salary >=21000.00 && salary < 22000.00 ){
+                 return 525.00;
+             }else if (salary >=22000.00 && salary < 23000.00 ){
+                 return 550.00;
+             }else if (salary >=23000.00 && salary < 24000.00 ){
+                 return 575.00;
+             }else if (salary >=24000.00 && salary < 25000.00 ){
+                 return 600.00;
+             }else if (salary >=25000.00 && salary < 26000.00 ){
+                 return 625.00;
+             }else if (salary >=26000.00 && salary < 27000.00 ){
+                 return 650.00;
+            }else if (salary >=27000.00 && salary < 28000.00 ){
+                 return 675.00;
+            }else if (salary >=28000.00 && salary < 29000.00 ){
+                 return 700.00;
+            }else if (salary >=29000.00 && salary < 30000.00 ){
+                 return 725.00;
+            }else if (salary >=30000.00 && salary < 31000.00 ){
+                 return 750.00;            
+            }else if (salary >=31000.00 && salary < 32000.00 ){
+                 return 775.00;            
+            }else if (salary >=32000.00 && salary < 33000.00 ){
+                 return 800.00;            
+            }else if (salary >=33000.00 && salary < 34000.00 ){
+                 return 825.00;            
+            }else if (salary >=34000.00 && salary < 35000.00 ){
+                 return 850.00;            
+            }else{
+                 return 875.00;            
+            }    
+             }   
+         }
+    }
+   
+
