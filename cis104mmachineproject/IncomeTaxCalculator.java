@@ -1,4 +1,3 @@
-
 package cis104mmachineproject;
 
 // Class containing all methods for calculating the components of the
