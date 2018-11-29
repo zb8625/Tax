@@ -747,7 +747,7 @@ public class GUI extends javax.swing.JFrame {
     
         // Limiting decimal places for double and float data types and converting
         // result to String for display in Labels
-        DecimalFormat df = new DecimalFormat("0.00"); // 2 decimal places with padding
+        DecimalFormat df = new DecimalFormat("#,##0.00"); // 2 decimal places with comma separators for thousands place
     
         // Variable holders for tax calculation fields to be displayed
         double exemption1 = user1.getDependentExemption();
