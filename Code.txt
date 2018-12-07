@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,9 +8,19 @@ import java.util.Scanner;
  *
  * @author: John Carlos Zuniga, Bo Zhang
  */
-public class test {
+public class NewClass2 {
     public static void main(String[] args) {
         try (Scanner scan = new Scanner(System.in)) {
+            
+            System.out.println("=======================================================================================================");
+            System.out.println("|   **      ***      **  *********  **          *******    ******         **      **      *********   |");
+            System.out.println("|    **    ** **    **   **         **        **         **      **      ****    ****     **          |");
+            System.out.println("|     **  **   **  **    *********  **       **         **        **    **  **  **  **    *********   |");
+            System.out.println("|      ****     ****     **         **        **         **      **    **    ****    **   **          |");
+            System.out.println("|       **       **      *********  *********   *******    ******     **      **      **  *********   |");
+            System.out.println("=======================================================================================================");
+            
+            
             System.out.println("Are you married（yes or no)? ");            
             String userCivil = scan.nextLine(); //If user are married            
             double MarriedExemption = isMarried(userCivil);
@@ -26,26 +36,45 @@ public class test {
             // number of dependents of user
             
             
-            System.out.print("Enter your monthly salry： ");
+            System.out.println("Enter your monthly salry(Php)： ");
             double monthlyGrossIncome = scan.nextDouble();
-            //// User-defined monthly gross income
+            // User-defined monthly gross income
+            
+            System.out.println("Input your other source salary(Php): ");
+            double otherIncome = scan.nextDouble();
             
             double monthlyIncometaxOld= getMonthlyIncomeTaxOld(monthlyGrossIncome,MarriedExemption ,dependentExemption);//
             double monthlyIncometaxNew = getMonthlyIncomeTaxNew(monthlyGrossIncome);
             double SSSDeduction = getSSSDeduction(monthlyGrossIncome,employed);
             double philHealthDeducion = getPhilHealthDeduction(monthlyGrossIncome,employed);
-            int PAGIBIGDeduction = getPAGIBIGDeduction();
+            int PAGIBIGDeduction = getPAGIBIGDeduction(monthlyGrossIncome);
+            double monthlyTakeHomePayOld = getMonthlyTakeHomePayOld(monthlyGrossIncome, monthlyIncometaxOld, SSSDeduction, philHealthDeducion, PAGIBIGDeduction);
+            double monthlyTakeHomePayTrain = getMonthlyTakeHomePayTrain(monthlyGrossIncome, monthlyIncometaxNew, SSSDeduction, philHealthDeducion, PAGIBIGDeduction);
             
+            
+            
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
             System.out.println("Your Monthly tax(Train Law) is: " +monthlyIncometaxNew);
             System.out.println("Your Annual tax(Train Law) is: " +monthlyIncometaxNew*12);
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
             System.out.println("Your Monthly tax(Old Tax Lwa) is: " +monthlyIncometaxOld);
             System.out.println("Your Monthly tax(Old Tax Lwa) is: " +monthlyIncometaxOld*12);
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
             System.out.println("Tax saving (Old less Train): " +(monthlyIncometaxOld - monthlyIncometaxNew));
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
             System.out.println("Your SSS deduction is "+ SSSDeduction);
             System.out.println("Your Philhealth deduction is: "+ philHealthDeducion);
             System.out.println("Your PAGIBIG deduction is: " + PAGIBIGDeduction);
-            System.out.println("Monthly take home pay(Train Law): "+(monthlyGrossIncome - monthlyIncometaxNew - SSSDeduction - philHealthDeducion- PAGIBIGDeduction));  
-            System.out.println("Monthly take home pay(Old Tax Lwa): "+(monthlyGrossIncome - monthlyIncometaxOld - SSSDeduction - philHealthDeducion- PAGIBIGDeduction));
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
+            System.out.println("Monthly take home pay(Train Law): "+monthlyTakeHomePayTrain);  
+            System.out.println("Monthly take home pay(Old Tax Lwa): "+monthlyTakeHomePayOld);
+            System.out.println("----------------------------------------------------");
+            System.out.println("----------------------------------------------------");
         }
     }
     public static double isMarried(String userCivil){
@@ -78,16 +107,22 @@ public class test {
             }
         return result;
     }
-    public static int getPAGIBIGDeduction(){
+    public static int getPAGIBIGDeduction(double monthlyGrossIncome){
+        if (monthlyGrossIncome<=0)
+            return 0;
+        else
         return 100;
     }
-    public static double getMonthlyIncomeTaxOld (double salary,double MarriedExemption ,double dependentExemption){
+    public static double getMonthlyIncomeTaxOld (double monthlyIncome,double MarriedExemption ,double dependentExemption){
         /* "s" is anual salary but after deducted from married and dependent**/
          double annualIncome;
-            if (salary<=82000){
-                annualIncome=salary*12-MarriedExemption-dependentExemption;
+            if (monthlyIncome <=0)
+                return 0;
+            else{
+            if (monthlyIncome<=82000){
+                annualIncome=monthlyIncome*12-MarriedExemption-dependentExemption;
             }else{
-                annualIncome=salary*12+(salary-82000)-MarriedExemption-dependentExemption;
+                annualIncome=monthlyIncome*12+(monthlyIncome-82000)-MarriedExemption-dependentExemption;
             }
             if (annualIncome<=10000){
                 return annualIncome*0.05/12;
@@ -105,9 +140,13 @@ public class test {
                 return ((125000+(annualIncome-500000)*0.32)/12);
             }
     }
+    }
     public static double getMonthlyIncomeTaxNew(double monthlyGrossIncome){
     /* set sn as annual salary**/
             double annualSalary;
+            if(monthlyGrossIncome<=0)
+                return 0;
+            else{
             if (monthlyGrossIncome<= 90000){
                 annualSalary=monthlyGrossIncome*12;
             }  else{
@@ -128,8 +167,12 @@ public class test {
                 return ((2202500+0.35*(annualSalary-2000000)))/12;
             } 
     }
+    }
     public static double getSSSDeduction(double monthlyGrossIncome, String employed){
         if ("e".equals(employed)){
+            if (monthlyGrossIncome <=0)
+                return 0;
+            else{
             if (monthlyGrossIncome>=1000.00 && monthlyGrossIncome < 1250.00){
                 return 36.30;
             }else if(monthlyGrossIncome>=1250.00 && monthlyGrossIncome < 1750.00){
@@ -193,7 +236,11 @@ public class test {
             }else { 
                 return 581.30;
             }
+            }
         }else {
+            if (monthlyGrossIncome <=0)
+                return 0;
+            else{
             if (monthlyGrossIncome>=1000.00 && monthlyGrossIncome < 1250.00){
                 return 110.00;
             }else if(monthlyGrossIncome>=1250.00 && monthlyGrossIncome < 1750.00){
@@ -259,8 +306,12 @@ public class test {
             }
         }
     }
+    }
     public static double getPhilHealthDeduction(double monthlyGrossIncome, String employed){
          if ("e".equals(employed)){
+             if (monthlyGrossIncome <=0)
+                 return 0;
+             else{
              if (monthlyGrossIncome < 9000.00){
                  return 100.00;
              }else if (monthlyGrossIncome >=9000.00 && monthlyGrossIncome < 10000.00 ){
@@ -317,8 +368,12 @@ public class test {
                  return 425.00;            
             }else{
                  return 375.00;            
-            }      
+            }
+            }
          }else{
+             if (monthlyGrossIncome <=0)
+                 return 0;
+             else{
              if (monthlyGrossIncome < 9000.00){
                  return 200.00;
              }else if (monthlyGrossIncome >=9000.00 && monthlyGrossIncome < 10000.00 ){
@@ -376,9 +431,22 @@ public class test {
             }else{
                  return 875.00;            
             }    
-             }   
-         }
-    
+            }   
+        }
+         
 }
-   
-
+    public static double getMonthlyTakeHomePayOld(double monthlyGrossIncome, double monthlyIncometaxOld, double SSSDeduction, double philHealthDeducion, int PAGIBIGDeduction){
+         double result = monthlyGrossIncome - monthlyIncometaxOld - SSSDeduction - philHealthDeducion - PAGIBIGDeduction;
+         if (result <=0)
+             return 0;
+         else
+             return result;
+}
+    public static double getMonthlyTakeHomePayTrain(double monthlyGrossIncome, double monthlyIncometaxNew, double SSSDeduction, double philHealthDeducion, int PAGIBIGDeduction){
+        double result = monthlyGrossIncome - monthlyIncometaxNew - SSSDeduction - philHealthDeducion - PAGIBIGDeduction;
+        if (result <= 0)
+            return 0;
+        else
+            return result;
+}
+}
